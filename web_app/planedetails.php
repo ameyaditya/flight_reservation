@@ -1,5 +1,4 @@
 <?php
-	print_r($_POST);
 	$conn = mysqli_connect('localhost', 'root', "", 'flights2');
 	$query = "SELECT DISTINCT(c.Name) FROM city c, airports a, routes r WHERE r.departure_airport_code = a.Code AND a.City_code = c.Code";
 	$res = mysqli_query($conn, $query);
@@ -151,30 +150,42 @@ ORDER BY i.fcost");
 	    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="signup-btn" data-toggle="modal" data-target="#signup-modal">Signup</button>
 	  </div>
 	</nav>
-
+	<div id="hidden-form" style="display: none;">
+		<form action="addpassengers.php" method="post" id="hidden-form-form">
+			<input type="hidden" name="ori" id="ori">
+			<input type="hidden" name="des" id="des">
+			<input type="hidden" name="depdat" id="depdat">
+			<input type="hidden" name="tcla" id="tcla">
+			<input type="hidden" name="trav" id="trav">
+			<input type="hidden" name="instance" id="instance">
+			<button type="submit">Submit</button>
+		</form>
+	</div>
 	<div class="container-fluid">
 		<div id="home-wallpaper2">
 			<div class="container-fluid" id="initial-submit-form2">
 				<div class="container-fluid" id="heading-initial-form2">
 					<div class="row">
-						<div class="col-2" style="text-align: center;">
-							From City
-						</div>
-						<div class="col-2" style="padding-left: 55px;">
-							To City
-						</div>
+						<!-- <div class="col-1"></div> -->
 						<div class="col-2" style="text-align: center;">
 							Origin
 						</div>
-						<div class="col-2" style="text-align: center;">
+						<div class="col-3" style="text-align: center; padding-left: 22px">
 							Destination
 						</div>
 						<div class="col-2" style="text-align: center;">
+							Departure Date
+						</div>
+						<!-- <div class="col-2" style="text-align: center;">
+							Return Date
+						</div> -->
+						<div class="col-3" style="text-align: center; padding-right: 40px;">
 							Travel class
 						</div>
-						<div class="col-2" style="text-align: center;">
+						<div class="col-2" style="text-align: center; padding-right: 45px;">
 							Travellers
 						</div>
+						<!-- <div class="col-1"></div> -->
 					</div>
 				</div>
 				
@@ -209,13 +220,13 @@ ORDER BY i.fcost");
 				      </select>
 				    </div>
 				    <div class="col mr-1">
-				      <input type="date" name="departure" id="departure-date" class="form-control" placeholder="Departure Date" value="<?php echo $dep; ?>">
+				      <input type="date" name="departure" id="departure-date-2" class="form-control" placeholder="Departure Date" value="<?php echo $dep; ?>">
 				    </div>
+				    <!-- <div class="col mr-1"> -->
+				      <input type="hidden" name="arrival" id="arrival-date" class="form-control" value="<?php echo $arr; ?>" placeholder="Return Date">
+				    <!-- </div> -->
 				    <div class="col mr-1">
-				      <input type="date" name="arrival" id="arrival-date" class="form-control" value="<?php echo $arr; ?>" placeholder="Return Date">
-				    </div>
-				    <div class="col mr-1">
-				    	<select class="form-control" id="tclass" name="tclass">
+				    	<select class="form-control" id="tclass-2" name="tclass">
                             <?php 
                                 if($tclass == "Economy")
                                     echo "<option selected>Economy</option>";
@@ -238,7 +249,7 @@ ORDER BY i.fcost");
                         </select>
 				    </div>
 				    <div class="col mr-1">
-			    		<input type="number" min="1" max="9" class="form-control" placeholder="Travellers" id="travellers" value="<?php echo $travellers; ?>" name="travellers">
+			    		<input type="number" min="1" max="9" class="form-control" placeholder="Travellers" id="travellers-2" value="<?php echo $travellers; ?>" name="travellers">
 				    </div>
 				  </div>
 					<div class="row" style="display: none;">
@@ -257,70 +268,80 @@ ORDER BY i.fcost");
 		<h1 class="display-4" style="text-align: center;">
 			Flight Data
 		</h1>
-		<?php while($row = mysqli_fetch_assoc($res)){ ?>
-		<div id="flight-data-row">
-			<div class="row">
-				<div class="col-3">
-					<span class="">
-						<?php 
-							$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM city WHERE `Code` = '".$row['departure_airport_code']."'"))['Name'];
+		<div id="flight-data">
+			<?php 
+			if(mysqli_num_rows($res) > 0){
+			while($row = mysqli_fetch_assoc($res)){ ?>
+			<div id="flight-data-row">
+				<div class="row">
+					<div class="col-3">
+						<span class="">
+							<?php 
+								$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM city WHERE `Code` = '".$row['departure_airport_code']."'"))['Name'];
 
-							echo $res_dep; ?>
-					</span><br>
-					<span class="name-span">
-						<?php 
-							$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM airports WHERE `City_code` = '".$row['departure_airport_code']."'"))['Name'];
+								echo $res_dep; ?>
+						</span><br>
+						<span class="name-span">
+							<?php 
+								$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM airports WHERE `City_code` = '".$row['departure_airport_code']."'"))['Name'];
 
-							echo $res_dep; ?>
-					</span>
+								echo $res_dep; ?>
+						</span>
+					</div>
+					<div class="col-3">
+						<?php
+							$dep = $row['departure'];
+							$arr = $row['arrival'];
+							$dep = strtotime($dep);
+							$arr = strtotime($arr);
+							$mins = ($arr - $dep)/60;
+							echo "<b>".intdiv($mins, 60)."h   ".($mins % 60)."m</b>";
+
+						?>
+					</div>
+					<div class="col-3">
+						<span class="">
+							<?php 
+								$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM city WHERE `Code` = '".$row['arrival_airport_code']."'"))['Name'];
+
+								echo $res_dep; ?>
+						</span><br>
+						<span class="name-span">
+							<?php 
+								$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM airports WHERE `City_code` = '".$row['arrival_airport_code']."'"))['Name'];
+
+								echo $res_dep; ?>
+						</span>
+					</div>
+					<div class="col-3">
+						<span id="cost-span">
+							<?php echo "Rs.".$row[$costvar]; ?>
+						</span>
+					</div>
 				</div>
-				<div class="col-3">
-					<?php
-						$dep = $row['departure'];
-						$arr = $row['arrival'];
-						$dep = strtotime($dep);
-						$arr = strtotime($arr);
-						$mins = ($arr - $dep)/60;
-						echo "<b>".intdiv($mins, 60)."h   ".($mins % 60)."m</b>";
-
-					?>
-				</div>
-				<div class="col-3">
-					<span class="">
-						<?php 
-							$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM city WHERE `Code` = '".$row['arrival_airport_code']."'"))['Name'];
-
-							echo $res_dep; ?>
-					</span><br>
-					<span class="name-span">
-						<?php 
-							$res_dep = mysqli_fetch_assoc(mysqli_query($conn, "SELECT Name FROM airports WHERE `City_code` = '".$row['arrival_airport_code']."'"))['Name'];
-
-							echo $res_dep; ?>
-					</span>
-				</div>
-				<div class="col-3">
-					<span id="cost-span">
-						<?php echo "Rs.".$row[$costvar]; ?>
-					</span>
+				<div class="row">
+					<div class="col-3">
+						<?php echo explode(" ", $row['departure'])[1]; ?>
+					</div>
+					<div class="col-3">
+						<?php echo $row['Name']."-".$row['Instance_ID']; ?>
+					</div>
+					<div class="col-3">
+						<?php echo explode(" ", $row['arrival'])[1]; ?>
+					</div>
+					<div class="col-3">
+						<button class="btn btn-primary" id="<?php echo $row['Instance_ID']; ?>" onclick="buyticket(this.id)">Book Ticket</button>
+					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-3">
-					<?php echo explode(" ", $row['departure'])[1]; ?>
-				</div>
-				<div class="col-3">
-					<?php echo $row['Name']."-".$row['Instance_ID']; ?>
-				</div>
-				<div class="col-3">
-					<?php echo explode(" ", $row['arrival'])[1]; ?>
-				</div>
-				<div class="col-3">
-					<button class="btn btn-primary" id="<?php echo $row['Instance_ID']; ?>" onclick="buyticket(this.id)">Book Ticket</button>
-				</div>
+			<?php }} else{ ?>
+			<div id="no-data">
+				<h1 class="display-4"  style="font-size: 1.5em; text-align: center; margin-top: 20px;">
+					No Flight available for these these dates from <?php echo $origin; ?> to <?php echo $destination; ?>.
+				</h1>
 			</div>
+		<?php } ?>
 		</div>
-	<?php } ?>
 	</div>
 </body>
 </html>

@@ -1,11 +1,10 @@
 <?php 
 	$conn = mysqli_connect("localhost", "root", "", "flights2");
-	$origin = $_POST['origin'];
-	$destination = $_POST['destination'];
-	$dep_date = $_POST['departure'];
-	$arr_date = $_POST['arrival'];
-	$tclass  = $_POST['tclass'];
-	$travellers = $_POST['travellers'];
+	$origin = $_POST['ori'];
+	$destination = $_POST['des'];
+	$dep_date = $_POST['depdat'];
+	$tclass  = $_POST['tcla'];
+	$travellers = $_POST['trav'];
 	$id = $_POST['instance'];
 	$costvar = "";
 	switch ($tclass) {

@@ -188,14 +188,34 @@ function submittic(){
 function buyticket(id){
 	// var id = this.id;
 	var origin = $("#fromname option:selected").val();
-	var destination = $("#destination-disp option:selected").val();
+	var destination = $("#destination-disp-2 option:selected").val();
 	var arrival = $("#arrial-date").val();
-	var destination = $("#departure-date").val();
-	var tclass = $("#tclass option:selected").val();
-	var travellers = $("#nop").val();
+	var departure = $("#departure-date-2").val();
+	var tclass = $("#tclass-2 option:selected").val();
+	var travellers = $("#travellers-2").val();
 	var inst_id = id;
 	$("#instance").val(id);
-	$("#buy-ticket").submit();
+	console.log(origin, destination, departure, tclass, travellers, inst_id);
+	if(origin == "select"){
+		alert("Choose a correct origin city");
+	}
+	else if(destination == "select"){
+		alert("Choose a correct destination city");
+	}
+	else if(!departure){
+		alert("choose a correct date");
+	}
+	else if(travellers > 9 || travellers < 1){
+		alert("traveller must be between 1 and 9");
+	}
+	else{
+		$("#ori").val(origin);
+		$("#des").val(destination);
+		$("#depdat").val(departure);
+		$("#tcla").val(tclass);
+		$("#trav").val(travellers);
+		$("#hidden-form-form").submit();
+	}
 }
 
 function makepayment(){
@@ -249,8 +269,9 @@ $(document).ready(function(){
 				for (var i = 0; i < names.length; i++) {
 					data += "<option>"+names[i]+"</option>";
 				}
-				$("#destination-disp-2").html(data);
-				$("#destination-disp-2").removeAttr("disabled");
+				$("#destination-disp").html(data);
+				$("#destination-disp").removeAttr("disabled");
+				$("#query-form-2").submit();
 			},
 			error:function(err){
 				console.log(err);
@@ -262,6 +283,25 @@ $(document).ready(function(){
 		var des = $("#destination-disp-2 option:selected").val();
 		if(des != "select"){
 			$("#query-form-2").submit();
+		}
+	});
+	$("#departure-date-2").on("change", function(){
+		var dep = $("#departure-date-2").val();
+		if(dep){
+			console.log("Entered");
+			$("#query-form-2").submit();
+		}
+	});
+	$("#tclass-2").on("change", function(){
+		$("#query-form-2").submit();
+	});
+	$("#travellers-2").on("change", function(){
+		var tr = $("#travellers-2").val();
+		if(tr > 9 || tr < 1){
+			alert("travellers must be between 1 and 9");
+		}
+		else{
+			$("query-form-2").submit();
 		}
 	});
 	if($("#fromname option:selected").val() == "select")

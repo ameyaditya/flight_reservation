@@ -118,6 +118,7 @@
 							<select id="countries-list" class="form-control">
 								<option selected>Select Country</option>
 							</select>
+						</div>
 						<div class="form-group col-md-4">
 							<select id="states-list" class="form-control">
 								<option selected>Select State</option>
@@ -127,20 +128,15 @@
 							<select id="cities-list" class="form-control">
 								<option selected>Select City</option>
 							</select>
-						</div>
-						
+						</div>	
 					</div>
 					<button type="button" class="btn btn-primary" id="signup-submit-btn" onclick="registeruser()">Sign Up</button>
 				</form>
 			</div>
-
-	      </div>
-	      <div class="modal-footer">
 	      </div>
 	    </div>
 	  </div>
 	</div>
-
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <a class="navbar-brand" href="#">
@@ -187,6 +183,7 @@
 		<?php } ?>
 	  </div>
 	</nav>
+
 	<div id="successful-signup">
 		Successful
 	</div>
@@ -204,7 +201,7 @@
 						<div class="col-2" style="text-align: center;">
 							Origin
 						</div>
-						<div class="col-2" style="text-align: center; padding-left: 20px">
+						<div class="col-3" style="text-align: center; padding-left: 22px">
 							Destination
 						</div>
 						<div class="col-2" style="text-align: center;">
@@ -213,10 +210,10 @@
 						<!-- <div class="col-2" style="text-align: center;">
 							Return Date
 						</div> -->
-						<div class="col-2" style="text-align: center;">
+						<div class="col-3" style="text-align: center; padding-right: 40px;">
 							Travel class
 						</div>
-						<div class="col-2" style="text-align: center;">
+						<div class="col-2" style="text-align: center; padding-right: 45px;">
 							Travellers
 						</div>
 						<!-- <div class="col-1"></div> -->
@@ -249,9 +246,9 @@
 				    <div class="col mr-1">
 				      <input type="date" name="departure" id="departure-date" class="form-control" placeholder="Departure Date">
 				    </div>
-				    <!-- <div class="col mr-1">
-				      <input type="date" name="arrival" id="arrival-date" class="form-control" placeholder="Return Date">
-				    </div> -->
+				    <!-- <div class="col mr-1"> -->
+				      <input type="hidden" name="arrival" id="arrival-date" class="form-control" placeholder="Return Date">
+				    <!-- </div> -->
 				    <div class="col mr-1">
 				    	<select class="form-control" name="tclass" id="tclass">
 						  <option>Travel Class</option>
