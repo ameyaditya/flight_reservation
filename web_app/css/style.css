@@ -157,6 +157,52 @@
 #userdropdown a{
 	font-size: 0.8em;
 }
+#summary-heading{
+	font-size: 2em;
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
 
+#main-box{
+	padding: 20px 120px;
+	//margin-bottom: 100px;
+}
 
+.passenger-summary-heading{
+	font-size: 1.4em;
+	font-weight: 400;
+}
 
+.passenger-summary-box{
+	margin-top: 30px;
+	border-radius: 10px;
+	//border: 1px solid black;
+	padding: 20px;
+	margin-left: 30px;
+	background-color: #e5e5e5;
+}
+#passenger-details-heading{
+	font-size: 1.8em;
+	font-weight: 450;
+	font-family: sans-serif;
+	margin-top: 30px;
+}
+.airport-name{
+	font-size: 0.9em;
+}
+
+#main-main-box{
+	margin-bottom: 100px;
+}
+#final-price{
+	font-size: 2.1em;
+	margin-left: 30px;
+	font-weight: 450;
+	margin-top: 30px;
+}
+#pay-amt{
+	width: 85%;
+	text-align: center;
+	margin-left: 105px;
+}

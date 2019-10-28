@@ -123,7 +123,6 @@ function loginuser(){
 				password: pass
 			},
 			success: function(obj){
-				console.log(obj);
 				if(obj == "true"){
 					$("#loginmodal").modal("hide");
 					$('#successful-signup').text("Login Successful. Welcome");
@@ -222,7 +221,7 @@ function makepayment(){
 	var travellers = parseInt($("#nooftravellers").text().split(" ")[1]);
 	var tclass = $("#travelclass").text().split(" ")[0];
 	var instance_id = $("#instance-id").text();
-	var price = $("totprice").text().split(" ")[1];
+	var price = $("#totprice").text().split(" ")[1];
 	var data = new Array();
 	for (var i = 1; i <= travellers; i++) {
 		var temp = new Array();
