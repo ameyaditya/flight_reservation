@@ -1,13 +1,21 @@
 <?php
+	print_r($_POST);
 	$conn = mysqli_connect('localhost', 'root', "", 'flights2');
-	$query = "SELECT Name FROM city";
+	$query = "SELECT DISTINCT(c.Name) FROM city c, airports a, routes r WHERE r.departure_airport_code = a.Code AND a.City_code = c.Code";
 	$res = mysqli_query($conn, $query);
 	$arr2 = array();
 	while ($row = mysqli_fetch_assoc($res)) {
 		$arr2[] = $row['Name'];
 	}
-	$conn = mysqli_connect('localhost', "root","","flights2");
 	$origin = $_POST['origin'];
+
+	$query = "SELECT DISTINCT(c.Name) FROM city c, airports a, routes r WHERE r.arrival_airport_code = a.Code AND a.City_code = c.Code AND r.departure_airport_code IN (SELECT DISTINCT(a2.Code) FROM city ci2, airports a2 WHERE ci2.Code = a2.City_code AND ci2.Name = '$origin' )";
+	$res = mysqli_query($conn, $query);
+	$arr3 = array();
+	while ($row = mysqli_fetch_assoc($res)) {
+		$arr3[] = $row['Name'];
+	}
+
 	$destination = $_POST['destination'];
 	$dep = $_POST['departure'];
 	$arr = $_POST['arrival'];
@@ -78,6 +86,8 @@ ORDER BY i.fcost");
 	<title>Plane Details</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+    </script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
@@ -167,7 +177,8 @@ ORDER BY i.fcost");
 						</div>
 					</div>
 				</div>
-				<form method="post" action="addpassengers.php" id="buy-ticket">
+				
+				<form method="post" action="planedetails.php" id="query-form-2">
 				  <div class="row no-gutters">
 				    <div class="col mr-1">
 				      <!-- <input type="text" class="form-control" placeholder="From" list="fromname"> -->
@@ -185,10 +196,10 @@ ORDER BY i.fcost");
 				    </div>
 				    <div class="col mr-1">
 				      <!-- <input type="text" class="form-control" placeholder="To"> -->
-				      <select id="toname" class="custom-select" name="destination">
+				      <select class="custom-select" name="destination" id="destination-disp-2">
 				      	<option>select</option>
 				      	<?php
-				      		foreach ($arr2 as $key => $value) {
+				      		foreach ($arr3 as $key => $value) {
 				      			if($value == $destination)
 				      				echo "<option selected>".$value."</option>";
 				      			else
@@ -198,43 +209,43 @@ ORDER BY i.fcost");
 				      </select>
 				    </div>
 				    <div class="col mr-1">
-				      <input type="text" id="departure-date" name="departure" min="<?php echo date("Y-m-d"); ?>" max="<?php echo strtotime("+7 day", strtotime(date('Y-m-d'))); ?>" onfocus = "(this.type = 'date')" class="form-control" placeholder="Departure" value="<?php echo $dep; ?>">
+				      <input type="date" name="departure" id="departure-date" class="form-control" placeholder="Departure Date" value="<?php echo $dep; ?>">
 				    </div>
 				    <div class="col mr-1">
-				      <input type="date" id="arrival-date" name="arrival" class="form-control" placeholder="Arrival" value="<?php echo $arr; ?>">
+				      <input type="date" name="arrival" id="arrival-date" class="form-control" value="<?php echo $arr; ?>" placeholder="Return Date">
 				    </div>
 				    <div class="col mr-1">
 				    	<select class="form-control" id="tclass" name="tclass">
-				    		<?php 
-				    			if($tclass == "Economy")
-				    				echo "<option selected>Economy</option>";
-				    			else{
-				    		?>
-						  <option>Economy</option>
-							<?php }
-								if($tclass == "Business")
-									echo "<option selected>Business</option>";
-								else{
-							 ?>
-						  <option>Business</option>
-							<?php }
-								if($tclass == "First Class")
-									echo "<option selected>First Class</option>";
-								else{
-									?>
-						  <option>First Class</option>
-						  	<?php } ?>
-						</select>
+                            <?php 
+                                if($tclass == "Economy")
+                                    echo "<option selected>Economy</option>";
+                                else{
+                            ?>
+                          <option>Economy</option>
+                            <?php }
+                                if($tclass == "Business")
+                                    echo "<option selected>Business</option>";
+                                else{
+                             ?>
+                          <option>Business</option>
+                            <?php }
+                                if($tclass == "First Class")
+                                    echo "<option selected>First Class</option>";
+                                else{
+                                    ?>
+                          <option>First Class</option>
+                            <?php } ?>
+                        </select>
 				    </div>
 				    <div class="col mr-1">
-			    		<input type="number" id="nop" min="1" max="9" class="form-control" placeholder="Travellers" value="<?php echo $travellers; ?>" name="travellers">
+			    		<input type="number" min="1" max="9" class="form-control" placeholder="Travellers" id="travellers" value="<?php echo $travellers; ?>" name="travellers">
 				    </div>
-				    <input type="hidden" name="instance" id="instance">
 				  </div>
 					<div class="row" style="display: none;">
-				    	<button class="btn btn-primary submit-ticket" type="submit" id="initial-submit-btn" >Submit</button>
+				    	<button class="btn btn-primary" type="button" id="initial-submit-btn" onclick="submittic()">Submit</button>
 					</div>
 				</form>
+
 			</div>
 		</div>
 	</div>

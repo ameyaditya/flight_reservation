@@ -128,6 +128,7 @@ function loginuser(){
 					$("#loginmodal").modal("hide");
 					$('#successful-signup').text("Login Successful. Welcome");
 					$('#successful-signup').css("display", "inline-block");
+					location.reload();
 				}
 				else{
 					$("#loginmodal").modal("hide");
@@ -143,6 +144,14 @@ function loginuser(){
 		});
 	}
 }
+function logout(){
+	$.ajax({
+		url:"logout.php",
+		success: function(obj){
+			window.location.href = 'index.php';
+		}
+	});
+}
 function validatequery(){
 	var origin = $("#fromname option:selected").val();
 	var destination = $("#destination-disp option:selected").val();
@@ -154,7 +163,22 @@ function validatequery(){
 		alert("Please select a destination city.");
 		return false;
 	}
-	var dep_date = $("#")
+	var dep_date = $("#departure-date").val();
+	if(!dep_date){
+		alert("Enter valid departure date");
+		return false;
+	}
+	var tclass = $("#tclass").val();
+	if(tclass == "Travel Class"){
+		alert("Choose a Travel class");
+		return false;
+	}
+	var travellers = $("#travellers").val();
+	if(travellers < 1 || travellers > 9){
+		alert("travellers must be between 1 and 9");
+		return false;
+	}
+	return true;
 }
 function submittic(){
 	if(validatequery()){
@@ -225,13 +249,19 @@ $(document).ready(function(){
 				for (var i = 0; i < names.length; i++) {
 					data += "<option>"+names[i]+"</option>";
 				}
-				$("#destination-disp").html(data);
-				$("#destination-disp").removeAttr("disabled");
+				$("#destination-disp-2").html(data);
+				$("#destination-disp-2").removeAttr("disabled");
 			},
 			error:function(err){
 				console.log(err);
 			}
 			});
+		}
+	});
+	$("#destination-disp-2").on("change", function(){
+		var des = $("#destination-disp-2 option:selected").val();
+		if(des != "select"){
+			$("#query-form-2").submit();
 		}
 	});
 	if($("#fromname option:selected").val() == "select")

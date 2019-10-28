@@ -1,0 +1,68 @@
+<form method="post" action="addpassengers.php" id="buy-ticket">
+                  <div class="row no-gutters">
+                    <div class="col mr-1">
+                      <!-- <input type="text" class="form-control" placeholder="From" list="fromname"> -->
+                      <select id="fromname" class="custom-select" name="origin">
+                        <option>select</option>
+                        <?php
+                            foreach ($arr2 as $key => $value) {
+                                if($value == $origin)
+                                    echo "<option selected>".$value."</option>";
+                                else
+                                    echo "<option>".$value."</option>";
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="col mr-1">
+                      <!-- <input type="text" class="form-control" placeholder="To"> -->
+                      <select id="toname" class="custom-select" name="destination">
+                        <option>select</option>
+                        <?php
+                            foreach ($arr2 as $key => $value) {
+                                if($value == $destination)
+                                    echo "<option selected>".$value."</option>";
+                                else
+                                    echo "<option>".$value."</option>";
+                            }
+                        ?>
+                      </select>
+                    </div>
+                    <div class="col mr-1">
+                      <input type="text" id="departure-date" name="departure" min="<?php echo date("Y-m-d"); ?>" max="<?php echo strtotime("+7 day", strtotime(date('Y-m-d'))); ?>" onfocus = "(this.type = 'date')" class="form-control" placeholder="Departure" value="<?php echo $dep; ?>">
+                    </div>
+                    <div class="col mr-1">
+                      <input type="date" id="arrival-date" name="arrival" class="form-control" placeholder="Arrival" value="<?php echo $arr; ?>">
+                    </div>
+                    <div class="col mr-1">
+                        <select class="form-control" id="tclass" name="tclass">
+                            <?php 
+                                if($tclass == "Economy")
+                                    echo "<option selected>Economy</option>";
+                                else{
+                            ?>
+                          <option>Economy</option>
+                            <?php }
+                                if($tclass == "Business")
+                                    echo "<option selected>Business</option>";
+                                else{
+                             ?>
+                          <option>Business</option>
+                            <?php }
+                                if($tclass == "First Class")
+                                    echo "<option selected>First Class</option>";
+                                else{
+                                    ?>
+                          <option>First Class</option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <div class="col mr-1">
+                        <input type="number" id="nop" min="1" max="9" class="form-control" placeholder="Travellers" value="<?php echo $travellers; ?>" name="travellers">
+                    </div>
+                    <input type="hidden" name="instance" id="instance">
+                  </div>
+                    <div class="row" style="display: none;">
+                        <button class="btn btn-primary submit-ticket" type="submit" id="initial-submit-btn" >Submit</button>
+                    </div>
+                </form>

@@ -118,7 +118,6 @@
 							<select id="countries-list" class="form-control">
 								<option selected>Select Country</option>
 							</select>
-						</div>
 						<div class="form-group col-md-4">
 							<select id="states-list" class="form-control">
 								<option selected>Select State</option>
@@ -184,7 +183,7 @@
 		    <a class="dropdown-item" href="#">Booking history</a>
 		  </div>
 		</div>
-		<button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="logout-btn">Logout</button>
+		<button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="logout-btn" onclick="logout()">Logout</button>
 		<?php } ?>
 	  </div>
 	</nav>
@@ -201,24 +200,26 @@
 			<div class="container" id="initial-submit-form">
 				<div class="container-fluid" id="heading-initial-form">
 					<div class="row">
+						<!-- <div class="col-1"></div> -->
 						<div class="col-2" style="text-align: center;">
 							Origin
 						</div>
-						<div class="col-2" style="padding-left: 40px;">
+						<div class="col-2" style="text-align: center; padding-left: 20px">
 							Destination
 						</div>
 						<div class="col-2" style="text-align: center;">
 							Departure Date
 						</div>
-						<div class="col-2" style="text-align: center;">
+						<!-- <div class="col-2" style="text-align: center;">
 							Return Date
-						</div>
+						</div> -->
 						<div class="col-2" style="text-align: center;">
 							Travel class
 						</div>
 						<div class="col-2" style="text-align: center;">
 							Travellers
 						</div>
+						<!-- <div class="col-1"></div> -->
 					</div>
 				</div>
 				<form method="post" action="planedetails.php" id="query-form">
@@ -246,13 +247,13 @@
 				      </select>
 				    </div>
 				    <div class="col mr-1">
-				      <input type="text" name="departure" class="form-control" placeholder="Departure Date">
+				      <input type="date" name="departure" id="departure-date" class="form-control" placeholder="Departure Date">
 				    </div>
+				    <!-- <div class="col mr-1">
+				      <input type="date" name="arrival" id="arrival-date" class="form-control" placeholder="Return Date">
+				    </div> -->
 				    <div class="col mr-1">
-				      <input type="text" name="arrival" id="arrival-date" class="form-control" placeholder="Return Date">
-				    </div>
-				    <div class="col mr-1">
-				    	<select class="form-control" name="tclass">
+				    	<select class="form-control" name="tclass" id="tclass">
 						  <option>Travel Class</option>
 						  <option>Economy</option>
 						  <option>Business</option>
@@ -260,7 +261,7 @@
 						</select>
 				    </div>
 				    <div class="col mr-1">
-			    		<input type="number" min="1" max="9" class="form-control" placeholder="Travellers" value="0" name="travellers">
+			    		<input type="number" min="1" max="9" class="form-control" placeholder="Travellers" id="travellers" value="0" name="travellers">
 				    </div>
 				  </div>
 					<div class="row">
