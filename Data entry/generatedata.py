@@ -21,14 +21,14 @@ x3 = requests.get('http://localhost:8096/getairplanes.php')
 data4 = x3.json()
 print("Get airplanes data")
 date = [(datetime.datetime.now()).replace(hour = 0, minute = 0, second = 0, microsecond = 0)]
-while len(date) <= 3:
+while len(date) <= 6:
 	date.append(date[-1] + datetime.timedelta(days = 1))
 date = date[1:]
 print(date)
 for eachdate in date:
 	for route in data:
 		rnum = int(random.random()*100000)
-		if (rnum % 4) != 0:
+		if (rnum % 5) != 0:
 			# params = {'route':route['Route_ID']}
 			# planes_nums = requests.get(url2, params = params)
 			try:
@@ -36,7 +36,7 @@ for eachdate in date:
 				for eachplane in planes_nums:
 					randnum2 = int(random.random()*100000)
 					if (randnum2 % 23) != 0:
-						randnum4 = random.randint(1, 10)
+						randnum4 = random.randint(1, 5)
 						for i in range(randnum4):
 							# params2 = {'planeid': eachplane}
 							# data3 = requests.get(url3, params = params2)

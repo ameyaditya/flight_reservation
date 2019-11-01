@@ -1,17 +1,7 @@
-<?php
-	session_start();
-	$p = $_GET['pids'];
-	$pids = explode(",",$_GET['pids']);
-	$price = $_GET['price'];
-	$conn = mysqli_connect("localhost", "root", "", "flights2");
-	$uid = $_SESSION['uid'];
-	$inst_id = "";
-	$type = "";
-?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Finalise</title>
+	<title>Successful</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
@@ -133,6 +123,7 @@
 	    </div>
 	  </div>
 	</div>
+
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 	  <a class="navbar-brand" href="#">
 	    <img src="img/plane logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -164,154 +155,13 @@
 	    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="signup-btn" data-toggle="modal" data-target="#signup-modal">Signup</button>
 	  </div>
 	</nav>
-	<div class="container" id="main-main-box">
-		<h1 class="display-4" id="summary-heading">
-			Summary
-		</h1>
-		<div id="main-box" class="container">
-			<h1 class="display-4" id="passenger-details-heading">Passenger details: </h1>
-			<?php
-				for($i = 0; $i < count($pids); $i++){
-					$id = $pids[$i];
-					$que = "SELECT *FROM passenger WHERE Passenger_ID = '$id'";
-					$res = mysqli_fetch_assoc(mysqli_query($conn, $que));
-					$inst_id = $res['Flight_inst_ID'];
-					$type = $res['Type']; ?>
-			<div class="container-fluid passenger-summary-box">
-				<h1 class="passenger-summary-heading display-4">Passenger <?php echo ($i+1); ?></h1>
-				<div class="row">
-					<div class="col-1"></div>
-					<div class="col-7">
-						<span class="passenger-name-sex"><?php echo $res['Passenger_name']." (".$res['Sex'].")"; ?></span>
-					</div>
-					<div class="col-4">
-						<span class="passenger-age"><?php echo "Age: ".$res['Age']; ?></span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-1"></div>
-					<div class="col-7">
-						<span class="passenger-email"><?php echo $res['Email_ID']; ?></span>	
-					</div>
-					<div class="col-4">
-						<span class="passenger-phone"><?php echo "Phone: ".$res['Phone']; ?></span>
-					</div>
-				</div>
-				<div class="row">
-				</div>
-			</div>
-			<?php
-				}
-			?>
-			<?php
-				$que = "SELECT ap.Name as airplane, i.departure, i.arrival, ar1.Name as dep_airname, c1.Name as dep_city, ar2.Name as arr_airname, c2.Name as arr_city
-					from instances i, airplane ap, routes r, city c1, city c2, airports ar1, airports ar2
-					WHERE i.Route_ID = r.Route_ID
-					AND i.plane_ID = ap.Code
-					AND r.departure_airport_code = ar1.Code
-					AND ar1.City_code = c1.Code
-					AND r.arrival_airport_code = ar2.Code
-					AND ar2.City_code = c2.Code
-					AND i.Instance_ID = '$inst_id'";
-				$res = mysqli_fetch_assoc(mysqli_query($conn, $que));
-			?>
-			<h1 class="display-4" id="passenger-details-heading">Flight details: </h1>
-			<div class="container-fluid passenger-summary-box">
-				<div class="row">
-					<div class="col-12" style="text-align: center; font-size: 1.2em; margin-bottom: 20px;">
-						<?php echo $res['airplane'].", ".$type; ?>
-					</div>					
-				</div>
-				<div class="row">
-					<div class="col-2">
-						Origin:
-					</div>
-					<div class="col-4">
-						<span class="airport-name"><?php echo $res['dep_airname']; ?></span>
-					</div>
-					<div class="col-2">
-						Destination: 
-					</div>
-					<div class="col-4">
-						<span class="airport-name"><?php echo $res['arr_airname']; ?></span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-2"></div>
-					<div class="col-4">
-						 <?php echo $res['dep_city']; ?>
-					</div>
-					<div class="col-2"></div>
-					<div class="col-4">
-						 <?php echo $res['arr_city']; ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-2">Departure: </div>
-					<div class="col-4">
-						<?php echo $res['departure']; ?>
-					</div>
-					<div class="col-2">Arrival: </div>
-					<div class="col-4">
-						<?php echo $res['arrival']; ?>
-					</div>
-				</div>
-			</div>
-			<h1 class="display-4" id="passenger-details-heading">Billing details: </h1>
-			<?php  
-				$que = "SELECT U_name,u.email as email, Phone, Line1, Line2, City, State, Country FROM users u, contact_details WHERE Contact_ID = Contact_det AND User_ID = '$uid'";
-				$res = mysqli_fetch_assoc(mysqli_query($conn, $que));
-				$u_name = $res['U_name'];
-				$uemail = $res['email'];
-			?>
-			<div class="container-fluid passenger-summary-box">
-				<div class="row">
-					<div class="col-12">
-						<?php echo "Name: ".$res['U_name']; ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<?php echo "Email ID: ".$res['email']; ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-3">
-						<?php echo "Billing address: "; ?>
-					</div>
-					<div class="col-9">
-						<?php echo $res['Line1']; ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-3"></div>
-					<div class="col-9">
-						<?php echo $res['Line2']; ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-3"></div>
-					<div class="col-9">
-						<?php echo $res['City'].", ".$res['State'].", ".$res['Country']; ?>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-12">
-						<?php echo "Phone: ".$res['Phone']; ?>
-					</div>
-				</div>
-			</div>
-			<h1 class="display-4" id="final-price">Total: Rs.<?php echo $price; ?></h1>
-		</div> 
-		<button class="btn btn-primary" id="pay-amt" onclick="pay()">
-			Confirm & Pay
-		</button>
+	<div class="container" id="success-box">
+		<div id="tick-mark">
+			
+		</div>
+		<h1 class="display-4">Booking Successful</h1>
+		<button class="btn btn-success">View Tickets</button><br>
+		<button class="btn btn-primary">Home</button>
 	</div>
-	<form id="payment-form" method="post" action="transaction.php">
-		<input type="hidden" name="price" value="<?php echo $price; ?>">
-		<input type="hidden" name="pids" value="<?php echo $p; ?>">
-		<input type="hidden" name="uname" value="<?php echo $u_name; ?>">
-		<input type="hidden" name="uemail" value="<?php echo $uemail; ?>">
-	</form>
 </body>
 </html>

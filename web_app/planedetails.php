@@ -48,8 +48,8 @@ WHERE i.Route_ID = r.Route_ID
 AND i.plane_ID = ap.Code 
 AND r.departure_airport_code = '$origin_code' 
 AND r.arrival_airport_code = '$destination_code'
-AND ap.Eseats > 0
-AND ap.Eseats >= '$travellers'
+AND i.eseats > 0
+AND i.eseats >= '$travellers'
 AND departure LIKE '$dep%'
 ORDER BY i.ecost";
 		$res = mysqli_query($conn, $que);
@@ -61,8 +61,8 @@ WHERE i.Route_ID = r.Route_ID
 AND i.plane_ID = ap.Code 
 AND r.departure_airport_code = '$origin_code' 
 AND r.arrival_airport_code = '$destination_code'
-AND ap.Bseats > 0
-AND ap.Bseats >= '$travellers'
+AND i.bseats > 0
+AND i.bseats >= '$travellers'
 AND departure LIKE '$dep%'
 ORDER BY i.bcost");
 	}
@@ -73,8 +73,8 @@ WHERE i.Route_ID = r.Route_ID
 AND i.plane_ID = ap.Code 
 AND r.departure_airport_code = '$origin_code' 
 AND r.arrival_airport_code = '$destination_code'
-AND ap.Fseats > 0
-AND ap.Fseats >= '$travellers'
+AND i.fseats > 0
+AND i.fseats >= '$travellers'
 AND departure LIKE '$dep%'
 ORDER BY i.fcost");
 	}

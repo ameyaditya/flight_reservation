@@ -41,6 +41,9 @@ function validatesignup(){
 	$("#signup-msg").css("display", "none");
 	return true;
 }
+function pay(){
+	$("#payment-form").submit();
+}
 function registeruser(){
 	var username = $("#username").val();
 	var emailid = $('#emailidsignup').val();
