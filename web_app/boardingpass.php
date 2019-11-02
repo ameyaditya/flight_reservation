@@ -1,4 +1,7 @@
 <?php
+	if(!isset($_GET['pids'])){
+		header('location: index.php');
+	}
 	$p = $_GET['pids'];
 	$pids = $_GET['pids'];
 	$pids = explode(".", $pids);

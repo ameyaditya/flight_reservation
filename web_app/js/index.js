@@ -146,6 +146,27 @@ function loginuser(){
 		});
 	}
 }
+function asklogin(){
+	$.ajax({
+		url: "checklogin.php",
+		type: "post",
+		success:function(obj){
+			if(obj == "false")
+				$("#loginmodal").modal('show');
+		}
+	})
+}
+function checklogin(){
+	var returndata;
+	$.ajax({
+		url: "checklogin.php",
+		type: "post",
+		success:function(obj){
+			returndata = obj;
+		}
+	});
+	return returndata;
+}
 function logout(){
 	$.ajax({
 		url:"logout.php",
@@ -188,38 +209,55 @@ function submittic(){
 	}
 }
 function buyticket(id){
+	$.ajax({
+		url: "checklogin.php",
+		type: "post",
+		success:function(obj){
+			if(obj == "true"){
+				var origin = $("#fromname option:selected").val();
+				var destination = $("#destination-disp-2 option:selected").val();
+				var arrival = $("#arrial-date").val();
+				var departure = $("#departure-date-2").val();
+				var tclass = $("#tclass-2 option:selected").val();
+				var travellers = $("#travellers-2").val();
+				var inst_id = id;
+				$("#instance").val(id);
+				console.log(origin, destination, departure, tclass, travellers, inst_id);
+				if(origin == "select"){
+					alert("Choose a correct origin city");
+				}
+				else if(destination == "select"){
+					alert("Choose a correct destination city");
+				}
+				else if(!departure){
+					alert("choose a correct date");
+				}
+				else if(travellers > 9 || travellers < 1){
+					alert("traveller must be between 1 and 9");
+				}
+				else{
+					$("#ori").val(origin);
+					$("#des").val(destination);
+					$("#depdat").val(departure);
+					$("#tcla").val(tclass);
+					$("#trav").val(travellers);
+					$("#hidden-form-form").submit();
+				}
+			}
+			else{
+				$('#loginmodal').modal('show');
+			}
+		}
+	});
 	// var id = this.id;
-	var origin = $("#fromname option:selected").val();
-	var destination = $("#destination-disp-2 option:selected").val();
-	var arrival = $("#arrial-date").val();
-	var departure = $("#departure-date-2").val();
-	var tclass = $("#tclass-2 option:selected").val();
-	var travellers = $("#travellers-2").val();
-	var inst_id = id;
-	$("#instance").val(id);
-	console.log(origin, destination, departure, tclass, travellers, inst_id);
-	if(origin == "select"){
-		alert("Choose a correct origin city");
-	}
-	else if(destination == "select"){
-		alert("Choose a correct destination city");
-	}
-	else if(!departure){
-		alert("choose a correct date");
-	}
-	else if(travellers > 9 || travellers < 1){
-		alert("traveller must be between 1 and 9");
-	}
-	else{
-		$("#ori").val(origin);
-		$("#des").val(destination);
-		$("#depdat").val(departure);
-		$("#tcla").val(tclass);
-		$("#trav").val(travellers);
-		$("#hidden-form-form").submit();
-	}
-}
 
+}
+function viewtickets(){
+	window.location.href = 'bookinghistory.php';
+}
+function gohome(){
+	window.location.href = 'index.php';
+}
 function makepayment(){
 	var travellers = parseInt($("#nooftravellers").text().split(" ")[1]);
 	var tclass = $("#travelclass").text().split(" ")[0];
@@ -253,6 +291,7 @@ function makepayment(){
 	//
 }
 $(document).ready(function(){
+	asklogin();
 	$("#successful-signup").css("display", "none");
 	$("#signup-msg").css("display", "none");
 	$("#fromname").on('change', function(){

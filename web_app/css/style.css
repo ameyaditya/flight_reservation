@@ -209,6 +209,10 @@
 	text-align: center;
 	padding-top: 60px;
 }
+#f-box{
+	text-align: center;
+	padding-top: 60px;
+}
 #success-box button{
 	width: 450px;
 	margin-top: 30px;
@@ -216,7 +220,16 @@
 #tick-mark{
 	height: 300px;
 	width: 300px;
-	background-image: url('../img/tick.png');
+	background-image: url('../img/happy.gif');
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+	margin:auto;
+}
+#x-tick-mark{
+	height: 230px;
+	width: 230px;
+	background-image: url('../img/crying.gif');
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center center;
@@ -283,7 +296,7 @@
 }
 .pass-name, .pass-flight, .pass-airport, .pass-date, .pass-seat, .pass-zone, .pass-city{
 	font-family: sans-serif;
-	font-size: 1.0em !important;
+	font-size: 0.95em !important;
 	font-weight: 700;
 }
 .pass-seat{

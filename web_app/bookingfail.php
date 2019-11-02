@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Successful</title>
+	<title>Failed</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
@@ -175,11 +175,11 @@
 	  </div>
 	</nav>
 	<div class="container" id="success-box">
-		<div id="tick-mark">
+		<div id="x-tick-mark">
 			
 		</div>
-		<h1 class="display-4">Booking Successful</h1>
-		<button class="btn btn-success" onclick = "viewtickets()">View Tickets</button><br>
+		<h1 class="display-4" style="margin-top: 30px;">Booking Failed</h1>
+		<p class="lead">The booking failed due to some error in transaction or seats were not available. Any money deducted will be refunded.</p>
 		<button class="btn btn-primary" onclick="gohome()">Home</button>
 	</div>
 </body>

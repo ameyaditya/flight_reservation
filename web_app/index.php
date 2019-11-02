@@ -139,7 +139,7 @@
 	</div>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="#">
+	  <a class="navbar-brand" href="index.php">
 	    <img src="img/plane logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 	    Goibiba
 	  </a>
@@ -176,7 +176,7 @@
 		  </button>
 		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="userdropdown">
 		    <a class="dropdown-item" href="#">profile</a>
-		    <a class="dropdown-item" href="#">Booking history</a>
+		    <a class="dropdown-item" href="bookinghistory.php">Booking history</a>
 		  </div>
 		</div>
 		<button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="logout-btn" onclick="logout()">Logout</button>

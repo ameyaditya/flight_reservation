@@ -1,5 +1,7 @@
 <?php
 	session_start();
+	if(!isset($_SESSION['uid']))
+		header('location: index.php');
 	$p = $_GET['pids'];
 	$pids = explode(",",$_GET['pids']);
 	$price = $_GET['price'];
@@ -134,7 +136,7 @@
 	  </div>
 	</div>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="#">
+	  <a class="navbar-brand" href="index.php">
 	    <img src="img/plane logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 	    Goibiba
 	  </a>
@@ -160,8 +162,22 @@
 	        <a class="nav-link" href="#">Offers</a>
 	      </li>
 	    </ul>
+	    <?php 
+	    if(!isset($_SESSION['uid'])){ ?>
 	    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="login-btn" data-toggle="modal" data-target="#loginmodal">Login</button>
 	    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="signup-btn" data-toggle="modal" data-target="#signup-modal">Signup</button>
+		<?php }else{ ?>
+		<div class="dropdown">
+		  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <?php echo $_SESSION['uname']; ?>
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="userdropdown">
+		    <a class="dropdown-item" href="#">profile</a>
+		    <a class="dropdown-item" href="bookinghistory.php">Booking history</a>
+		  </div>
+		</div>
+		<button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="logout-btn" onclick="logout()">Logout</button>
+		<?php } ?>
 	  </div>
 	</nav>
 	<div class="container" id="main-main-box">

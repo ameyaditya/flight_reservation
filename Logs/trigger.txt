@@ -1,0 +1,19 @@
+DELIMITER $$
+CREATE TRIGGER update_num_passengers
+AFTER UPDATE ON passenger
+FOR EACH ROW
+BEGIN
+	IF OLD.confirmed = 0 AND NEW.confirmed = 1 THEN
+    	IF OLD.Type = 'Business' THEN
+        	UPDATE instances SET bseats = bseats - 1 WHERE Instance_ID = NEW.Flight_inst_ID;
+        END IF;
+        IF NEW.Type = 'Economy' THEN
+        	UPDATE instances SET eseats = eseats - 1 WHERE instance_ID = NEW.Flight_inst_ID;
+        end IF;
+        IF OLD.Type = 'First Class' THEN
+        	UPDATE instances SET fseats = fseats - 1 WHERE instance_ID = NEW.Flight_inst_ID;
+        END IF;
+	END IF;
+END;
+$$
+DELIMITER ;

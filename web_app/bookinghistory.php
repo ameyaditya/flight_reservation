@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php session_start();
+	if(!isset($_SESSION['uid']))
+		header('location: index.php');
+ ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +14,7 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<script type="text/javascript" src="js/bookinghistory.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
 	<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -126,7 +130,7 @@
 	</div>
 
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-	  <a class="navbar-brand" href="#">
+	  <a class="navbar-brand" href="index.php">
 	    <img src="img/plane logo.png" width="30" height="30" class="d-inline-block align-top" alt="">
 	    Goibiba
 	  </a>
@@ -152,8 +156,22 @@
 	        <a class="nav-link" href="#">Offers</a>
 	      </li>
 	    </ul>
+	    <?php 
+	    if(!isset($_SESSION['uid'])){ ?>
 	    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="login-btn" data-toggle="modal" data-target="#loginmodal">Login</button>
 	    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="signup-btn" data-toggle="modal" data-target="#signup-modal">Signup</button>
+		<?php }else{ ?>
+		<div class="dropdown">
+		  <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		    <?php echo $_SESSION['uname']; ?>
+		  </button>
+		  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="userdropdown">
+		    <a class="dropdown-item" href="#">profile</a>
+		    <a class="dropdown-item" href="bookinghistory.php">Booking history</a>
+		  </div>
+		</div>
+		<button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="logout-btn" onclick="logout()">Logout</button>
+		<?php } ?>
 	  </div>
 	</nav>
 	<div class="container">
@@ -215,7 +233,7 @@
 								<button class="btn btn-primary" style="width: 100%;" onclick="download_pass(<?php echo join(".", $pids); ?>)">Download Boarding passes</button>
 							</div>
 							<div class="col-6">
-								<button class="btn btn-primary" style="width: 100%;" <?php if($onedata['cancelled'] == '0') echo "disbled"; ?>>Cancel Tickets</button>
+								<button class="btn btn-primary" onclick="cancel_tic(<?php echo "'".join(".", $pids)."'"; ?>)" style="width: 100%;" <?php if($onedata['cancelled'] == '1') echo "disabled"; ?>>Cancel Tickets</button>
 							</div>
 						</div>
 					</div>
