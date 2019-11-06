@@ -12,6 +12,8 @@
 	$pphone = $value[2];
 	$page = $value[3];
 	$psex = $value[4];	
+	if($tclass == 'First')
+		$tclass = "First Class";
 	$que = "INSERT INTO passenger(Passenger_name, Type, User_ID, Flight_inst_ID, Email_ID, Phone, Age, Sex) VALUES('$pname', '$tclass', '$uid', '$inst_id', '$pemail', '$pphone', '$page', '$psex')";
 	$res = mysqli_query($conn, $que);
 	if($res){

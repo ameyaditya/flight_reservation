@@ -350,3 +350,40 @@
 	color: white;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
+#admin-header{
+	margin-top: 100px;
+	padding: 10px 60px;
+}
+#admin-head{
+	text-align: center;
+	margin-top: 30px;
+	font-size: 1.5em;
+}
+#login-box-admin{
+	margin-top: 40px;
+
+}
+#admin-home{
+	text-align: center;
+	margin-top: 30px;
+	font-size: 2em;
+}
+#data-row{
+	padding: 10px;
+	height: 150px;
+	margin-top: 40px;
+}
+#data-row h1{
+	font-size: 1.7em;
+	text-align: center;
+	font-weight: 400;
+}
+.element-col{
+	border-radius: 10px;
+	padding-top: 80px;
+	height: 200px;
+	background-color: orange;
+	box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+}

@@ -10,7 +10,7 @@
 	//print_r($_POST);
 	$paymentmethods = array("CC" => "Credit Card", "DC" => "Debit Card", "NB" => "Net Banking", "UPI" => "UPI", "PPI" => "Paytm wallet", "PAYTMCC" => "Postpaid");
 	$mode = $paymentmethods[$payment_mode];
-	$que = "UPDATE transaction SET respcode = '$respcode', respmsg = '$respmsg', gateway = '$gateway', payment_mode = '$mode', status = '$status'";
+	$que = "UPDATE transaction SET respcode = '$respcode', respmsg = '$respmsg', gateway = '$gateway', payment_mode = '$mode', status = '$status' WHERE order_id = '$oid'";
 	$res = mysqli_query($conn, $que);
 	if($status == "TXN_SUCCESS" && $respcode == '01'){
 		$pids = explode("_", explode("0_0_", $oid)[1]);
@@ -39,6 +39,7 @@
 		if(count($pids) > $seats_left){
 			echo "No seats available";
 			echo "Initiating refund";
+			header("Location: bookingfail.php");
 		}
 		else{
 			$s = $seattype[$type];
@@ -61,7 +62,7 @@
 				}
 			}
 			else{
-				echo "not taken";
+				header("Location: bookingfail.php");
 			}
 			print_r($taken_seats);
 			while($counter < count($pids)){
@@ -80,5 +81,8 @@
 				}
 			}
 		}
+	}
+	else{
+		header("Location: bookingfail.php");
 	}
 ?>

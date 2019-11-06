@@ -261,6 +261,7 @@ function gohome(){
 function makepayment(){
 	var travellers = parseInt($("#nooftravellers").text().split(" ")[1]);
 	var tclass = $("#travelclass").text().split(" ")[0];
+	alert(tclass);
 	var instance_id = $("#instance-id").text();
 	var price = $("#totprice").text().split(" ")[1];
 	var data = new Array();
@@ -289,6 +290,9 @@ function makepayment(){
 		});
 	//console.log(pids);
 	//
+}
+function openmodal(nam){
+	$('#'+nam).modal('show');
 }
 $(document).ready(function(){
 	asklogin();
