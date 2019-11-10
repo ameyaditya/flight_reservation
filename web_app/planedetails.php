@@ -45,45 +45,54 @@
 	$destination_code = mysqli_fetch_array($destination_code)[0];
 	//print_r("\n".$origin_code." ".$destination_code);
 	if($tclass == 'Economy'){
-		$que = "SELECT *
-FROM instances i, routes r, airplane ap
-WHERE i.Route_ID = r.Route_ID
-AND i.plane_ID = ap.Code 
-AND r.departure_airport_code = '$origin_code' 
-AND r.arrival_airport_code = '$destination_code'
-AND i.eseats > 0
-AND i.eseats >= '$travellers'
-AND departure LIKE '$dep%'
-AND i.departure > '$d'
-ORDER BY i.ecost";
-		$res = mysqli_query($conn, $que);
+		$var = 'eseats';
+		$que = "CALL flight_data('$origin_code', '$destination_code', $travellers, '$dep%', '$d', '$var')";
+// 		$que = "SELECT *
+// FROM instances i, routes r, airplane ap
+// WHERE i.Route_ID = r.Route_ID
+// AND i.plane_ID = ap.Code 
+// AND r.departure_airport_code = '$origin_code' 
+// AND r.arrival_airport_code = '$destination_code'
+// AND i.eseats > 0
+// AND i.eseats >= '$travellers'
+// AND departure LIKE '$dep%'
+// AND i.departure > '$d'
+// ORDER BY i.ecost";
+		//$res = mysqli_query($conn, $que);
 	}
 	if($tclass == "Business"){
-		$res = mysqli_query($conn, "SELECT *
-FROM instances i, routes r, airplane ap
-WHERE i.Route_ID = r.Route_ID
-AND i.plane_ID = ap.Code 
-AND r.departure_airport_code = '$origin_code' 
-AND r.arrival_airport_code = '$destination_code'
-AND i.bseats > 0
-AND i.bseats >= '$travellers'
-AND departure LIKE '$dep%'
-AND i.departure > '$d'
-ORDER BY i.bcost");
+		$que = "CALL flight_data('$origin_code', '$destination_code', $travellers, '$dep%', '$d', 'bseats')";
+// 		$res = mysqli_query($conn, "SELECT *
+// FROM instances i, routes r, airplane ap
+// WHERE i.Route_ID = r.Route_ID
+// AND i.plane_ID = ap.Code 
+// AND r.departure_airport_code = '$origin_code' 
+// AND r.arrival_airport_code = '$destination_code'
+// AND i.bseats > 0
+// AND i.bseats >= '$travellers'
+// AND departure LIKE '$dep%'
+// AND i.departure > '$d'
+// ORDER BY i.bcost");
+		//$res = mysqli_query($conn, $que);
 	}
 	if($tclass == "First Class"){
-		$res = mysqli_query($conn, "SELECT *
-FROM instances i, routes r, airplane ap
-WHERE i.Route_ID = r.Route_ID
-AND i.plane_ID = ap.Code 
-AND r.departure_airport_code = '$origin_code' 
-AND r.arrival_airport_code = '$destination_code'
-AND i.fseats > 0
-AND i.fseats >= '$travellers'
-AND departure LIKE '$dep%'
-AND i.departure > '$d'
-ORDER BY i.fcost");
+// 		$res = mysqli_query($conn, "SELECT *
+// FROM instances i, routes r, airplane ap
+// WHERE i.Route_ID = r.Route_ID
+// AND i.plane_ID = ap.Code 
+// AND r.departure_airport_code = '$origin_code' 
+// AND r.arrival_airport_code = '$destination_code'
+// AND i.fseats > 0
+// AND i.fseats >= '$travellers'
+// AND departure LIKE '$dep%'
+// AND i.departure > '$d'
+// ORDER BY i.fcost");
+		$que = "CALL flight_data('$origin_code', '$destination_code', $travellers, '$dep%', '$d', 'fseats')";
+		//$res = mysqli_query($conn, $que);
 	}
+	$res = mysqli_query($conn, $que);
+	mysqli_close($conn);
+	$conn = mysqli_connect('localhost', 'root', "", 'flights2');
 ?>
 <!DOCTYPE html>
 <html>

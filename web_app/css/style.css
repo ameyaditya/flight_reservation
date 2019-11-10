@@ -1,7 +1,9 @@
 #login-btn{
 	margin-right: 20px;
 }
-
+.dropdown-toggle{
+	min-width: max-content !important;
+}
 #home-wallpaper{
 	background-image: url('../img/background2.jpg');
 	background-position: center;

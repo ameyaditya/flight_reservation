@@ -352,3 +352,30 @@ $(document).ready(function(){
 	if($("#fromname option:selected").val() == "select")
 		$("#destination-disp").attr("disabled", "true");
 });
+
+function submitairport(){
+	console.log("submittin");
+	$.ajax({
+		url: "submitairport.php",
+		type: "post",
+		data: {
+			air_code: $("#airport_code").val(),
+			air_name: $("#airport_name").val(),
+			city_code: $("#citycode").val(),
+			city_name: $("#cityname").val(),
+			country_code: $("#country_code").val(),
+			country_name: $("#country_name").val()
+		},
+		success: function(obj){
+			$("#airportmodal").modal('hide');
+			console.log(obj);
+			if(obj == "true"){
+
+				$("#message-box-admin").html("Successfully added airport");
+			}
+			else{
+				$("#message-box-admin").html("Some error occured while inserting");
+			}
+		}
+	})
+}

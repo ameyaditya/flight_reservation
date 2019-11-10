@@ -49,8 +49,8 @@
 				$que = "UPDATE passenger SET confirmed = '1' WHERE Passenger_ID = '$value'";
 				mysqli_query($conn, $que);
 			}
-			$que = "UPDATE instances SET $s = $s - $se WHERE Instance_ID = '$fid'";
-			mysqli_query($conn, $que);
+			// $que = "UPDATE instances SET $s = $s - $se WHERE Instance_ID = '$fid'";
+			// mysqli_query($conn, $que);
 			$seat = 1;
 			$counter = 0;
 			echo "$fid";

@@ -31,11 +31,41 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        
+	        <div class="container-fluid">
+	        	<form>
+				  <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <input type="text" class="form-control" id="airport_code" placeholder="Airport Code">
+				    </div>
+				    <div class="form-group col-md-6">
+				      <input type="text" class="form-control" id="airport_name" placeholder="Airport_name">
+				    </div>
+				  </div>
+				  <div class="form-row">
+					  <div class="form-group col-md-6">
+					   
+					    <input type="text" class="form-control" id="citycode" placeholder="City Code">
+					  </div>
+					  <div class="form-group col-md-6">
+					   
+					    <input type="text" class="form-control" id="cityname" placeholder="City Name">
+					  </div>
+				  </div>
+				  <div class="form-row">
+				    <div class="form-group col-md-6">
+				     
+				      <input type="text" class="form-control" id="country_code" placeholder="Country Code">
+				    </div>
+				    <div class="form-group col-md-6">
+				     
+				      <input type="text" id="country_name" class="form-control" placeholder="Country Name" >
+				    </div>
+			      </div>
+				  <button type="button" class="btn btn-primary" style="width: 100%;" onclick="submitairport()">Submit</button>
+				</form>
+	        </div>
 	      </div>
 	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
 	      </div>
 	    </div>
 	  </div>
@@ -58,6 +88,9 @@
 		<button class="btn btn-outline-primary my-2 my-sm-0" type="button" id="logout-btn" onclick="logoutadmin()">Logout</button>
 	  </div>
 	</nav>
+	<div id="message-box-admin" style="width: 100%; color: red; font-size: 1.0em;<?php echo 'display: none;'; ?>">
+		
+	</div>
 	<h1 class="display-4" id="admin-home">Admin Home</h1>
 <div class="container-fluid">
 	<div class="row" id="data-row">

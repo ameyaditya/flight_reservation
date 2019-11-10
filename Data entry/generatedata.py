@@ -21,7 +21,7 @@ x3 = requests.get('http://localhost:8096/getairplanes.php')
 data4 = x3.json()
 print("Get airplanes data")
 date = [(datetime.datetime.now()).replace(hour = 0, minute = 0, second = 0, microsecond = 0)]
-while len(date) <= 6:
+while len(date) <= 2:
 	date.append(date[-1] + datetime.timedelta(days = 1))
 date = date[1:]
 print(date)
