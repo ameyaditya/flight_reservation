@@ -130,7 +130,7 @@ function loginuser(){
 					$("#loginmodal").modal("hide");
 					$('#successful-signup').text("Login Successful. Welcome");
 					$('#successful-signup').css("display", "inline-block");
-					location.reload();
+					//location.reload();
 				}
 				else{
 					$("#loginmodal").modal("hide");
